@@ -1,0 +1,38 @@
+<style>
+  .popup-container.active .popup
+  {
+    width: 500px;
+  }
+</style>
+
+<div class="row">
+  <h3 class="col">
+    Current Round: {{newBolla.currentRound + 1}} -
+    <span ng-if="newBolla.rounds[newBolla.currentRound].state == 0"> Calls </span>
+    <span ng-if="newBolla.rounds[newBolla.currentRound].state == 1"> Play </span>
+  </h3>
+  <button class="button button-positive button-clear" ng-click="newBolla.newRound()"
+          ng-if="newBolla.rounds[newBolla.currentRound].state == 2">New Round</button>
+  <button class="button button-positive button-clear" ng-click="newBolla.playRound()"
+          ng-if="newBolla.rounds[newBolla.currentRound].state == 0">Play Round</button>
+  <button class="button button-assertive button-clear" ng-click="newBolla.resetRound()">Reset Round</button>
+</div>
+<div class="row">
+  <div class="col col-10" style="border: 1px solid;"> # </div>
+  <div class="col" style="border: 1px solid;"
+        ng-click="newBolla.changeName($index)"
+        ng-repeat="player in newBolla.players"> {{player.name}} </div>
+  <div class="col col-10" style="border: 1px solid;"> </div>
+</div>
+<div>
+  <div class="row" ng-repeat="round in newBolla.rounds">
+    <div class="col col-10" style="border: 1px solid;"> {{round.round}} </div>
+    <div class="col" ng-repeat="player in round.players" ng-click="newBolla.playerCall($parent.$index,$index)">
+      <div class="row">
+        <div class="col col-25" style="border: 1px solid;">{{player.currentCall}} {{player.currentColor}}</div>
+        <div class="col" style="border: 1px solid;">{{player.currentScore}}</div>
+      </div>
+    </div>
+    <div class="col col-10" style="border: 1px solid;"> -1 </div>
+  </div>
+</div>
