@@ -2,38 +2,58 @@
   'use strict';
 
   angular.module('estimationCalculator')
+          .filter('html',function($sce){
+              return function(input){
+                  if(typeof(input) == String )
+                    return $sce.trustAsHtml(input);
+                  else
+                    return input;
+              }
+          })
+
           .controller('NewBolla', NewBolla);
 
-  NewBolla.$inject = ['$ionicPopup', '$scope', 'changePlayerName', 'playerCall',
+  NewBolla.$inject = ['$localStorage', '$rootScope', '$ionicPopup', '$scope', 'changePlayerName',
+                      'playerCall',
                       'playerCollect', 'roundService', 'scoreCalculator'];
 
-  function NewBolla($ionicPopup, $scope, changePlayerName, playerCall,
+  function NewBolla($localStorage, $rootScope, $ionicPopup, $scope, changePlayerName, playerCall,
                       playerCollect, roundService, scoreCalculator)
   {
     var vm = this;
+    $scope.$emit('showBack',true);
+
     vm.players = [];
     vm.rounds = [];
     vm.currentRound = 0;
+
+    if(!$localStorage.bollas)
+      $localStorage.bollas = [];
 
     for(var i=0; i < 4; i++)
     {
       vm.players[i] = {name: 'Player '+(i+1), score: 0, isKing: false, isKooz: false};
     }
 
+    roundService.initRound(vm.rounds, vm.currentRound, vm.players);
+    $localStorage.bollas[$localStorage.bollas.length] =
+      {rounds: vm.rounds, players: vm.players, startDate: new Date()};
+
     vm.initRound = function(i)
     {
       roundService.initRound(vm.rounds, vm.currentRound, vm.players);
+      vm.saveBolla();
     }
-
-    roundService.initRound(vm.rounds, vm.currentRound, vm.players);
 
     vm.newRound = function()
     {
       vm.currentRound = roundService.newRound(vm.rounds, vm.currentRound);
+      vm.saveBolla();
     }
     vm.playRound = function()
     {
       roundService.playRound(vm.rounds, vm.currentRound);
+      vm.saveBolla();
     }
     vm.changeName = function(index)
     {
@@ -41,6 +61,7 @@
         vm.players[index].name = res.playerName;
         vm.rounds[vm.currentRound].players[index].name = res.playerName;
         console.log(vm.rounds[vm.currentRound]);
+        vm.saveBolla();
       });
     }
 
@@ -54,6 +75,7 @@
           vm.rounds[round].players[index].currentColor = res.color;
           scoreCalculator.calculateRoundCalls(vm.rounds[round]);
           console.log(vm.rounds[round]);
+          vm.saveBolla();
         });
       }
       //scores
@@ -65,6 +87,7 @@
             scoreCalculator.calculatePlayerScore(vm.rounds, vm.currentRound, index);
           //if last player change state to 2, declare king and kooz
           vm.checkRoundEnd();
+          vm.saveBolla();
         });
       }
     }
@@ -83,11 +106,20 @@
         vm.rounds[vm.currentRound].state = 2;
         scoreCalculator.calculateKingKooz(vm.rounds[vm.currentRound].players);
       }
+      vm.saveBolla();
     }
 
     vm.resetRound = function()
     {
       roundService.resetRound(vm.rounds, vm.currentRound);
+      vm.saveBolla();
+    }
+
+    vm.saveBolla = function()
+    {
+      $localStorage.bollas[$localStorage.bollas.length-1] =
+        {rounds: vm.rounds, players: vm.players,
+          startDate: $localStorage.bollas[$localStorage.bollas.length-1].startDate};
     }
 
   }

@@ -3,17 +3,43 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('estimationCalculator', ['ionic'])
+angular.module('estimationCalculator', ['ionic', 'ngStorage'])
 
 .config(function($stateProvider, $urlRouterProvider)
 {
   $stateProvider
+    .state('menu', {
+      url: "/menu",
+      templateUrl: "pages/menu/menu.template.html",
+      controller: 'MenuController',
+      controllerAs: 'menuCtrl'
+    })
     .state('new_bolla', {
       url: "/new_bolla",
       templateUrl: "pages/bolla/new_bolla.template.html",
       controller: 'NewBolla',
       controllerAs: 'newBolla'
+    })
+    .state('history', {
+      url: "/history",
+      templateUrl: "pages/history/history.template.html",
+      controller: 'HistoryController',
+      controllerAs: 'historyCtrl'
+    })
+    .state('settings', {
+      url: "/settings",
+      templateUrl: "pages/settings/settings.template.html",
+      controller: 'SettingsController',
+      controllerAs: 'settingsCtrl'
+    })
+    .state('about', {
+      url: "/about",
+      templateUrl: "pages/about/about.template.html",
+      controller: 'AboutController',
+      controllerAs: 'aboutCtrl'
     });
+
+    $urlRouterProvider.otherwise('/menu');
 })
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {

@@ -4,10 +4,14 @@
     angular.module('estimationCalculator')
     .controller('MainController', MainController);
 
-    MainController.$inject = [];
+    MainController.$inject = ['$state', '$scope', '$localStorage'];
 
-    function MainController()
+    function MainController($state, $scope, $localStorage)
     {
       var vm = this;
+      $localStorage.$reset();
+      $scope.$on('showBack', function(ev, val){
+        vm.showBack = val;
+      });
     }
 })();

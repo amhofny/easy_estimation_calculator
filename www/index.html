@@ -26,6 +26,7 @@
     <!-- ionic/angularjs js -->
     <script src="lib/jquery/dist/jquery.js"></script>
     <script src="lib/ionic/js/ionic.bundle.js"></script>
+    <script src="lib/ngstorage/ngStorage.js"></script>
 
     <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
@@ -39,22 +40,19 @@
     <script src="services/round.service.js"></script>
     <script src="services/score_calculator.service.js"></script>
     <script src="pages/bolla/new_bolla.controller.js"></script>
+    <script src="pages/history/history.controller.js"></script>
+    <script src="pages/menu/menu.controller.js"></script>
 
   </head>
   <body ng-app="estimationCalculator" ng-controller="MainController as mCtrl">
     <div class="ionic-body">
-      <ion-header-bar class="bar bar-header">
+      <ion-header-bar class="bar bar-header bar-dark">
+        <button ui-sref="menu" ng-if="mCtrl.showBack" class="button icon ion-navicon"></button>
         <h1 id="header" class="title">Easy Estimation Calculator</h1>
       </ion-header-bar>
       <ion-content class="has-header">
         <div ui-view>
-          <button class="button button-block button-positive" ui-sref="new_bolla">
-            New Bolla</button>
-          <button class="button button-block button-positive" ui-sref="history">History</button>
-          <button class="button button-block button-positive icon-left ion-gear-a"
-                  ui-sref="settings">Settings</button>
-          <button class="button button-block button-positive"
-                  ui-sref="about">About</button>
+
         </div>
       </ion-content>
     </div>

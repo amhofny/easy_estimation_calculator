@@ -27,7 +27,7 @@
             type: 'button-positive',
             onTap: function(e)
             {
-              if (!$rootScope.data.call) {
+              if ($rootScope.data.call == undefined) {
                 e.preventDefault();
               } else {
                 return $rootScope.data;

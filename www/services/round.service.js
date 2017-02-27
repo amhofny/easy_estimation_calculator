@@ -32,7 +32,7 @@
       var play = true;
       for(var i=0; i < players.length; i++)
       {
-        if(players[i].currentCall == 0){
+        if(players[i].currentCall == -1){
           play = false;
           break;
         }
@@ -56,7 +56,7 @@
       var play = true;
       for(var i=0; i < players.length; i++)
       {
-        if(players[i].currentCollected == 0){
+        if(players[i].currentCollected == -1){
           play = false;
           break;
         }
@@ -77,8 +77,33 @@
 
     function initRound(rounds, currentRound, players)
     {
-      console.log('init round: ' + currentRound);
-      rounds[currentRound] = {round: currentRound+1, state: 0, underOver: 0};
+      rounds[currentRound] = {round: currentRound+1, state: 0, underOver: 0, date: new Date()};
+      //colors and double round
+      if(rounds.length == 14)
+      {
+        rounds[currentRound].round = currentRound+'D';
+      }
+      else if(rounds.length == 15)
+      {
+        rounds[currentRound].round = '&#9728;';
+      }
+      else if(rounds.length == 16)
+      {
+        rounds[currentRound].round = '&spades;';
+      }
+      else if(rounds.length == 17)
+      {
+        rounds[currentRound].round = '&hearts;';
+      }
+      else if(rounds.length == 18)
+      {
+        rounds[currentRound].round = '&diams;';
+      }
+      else if(rounds.length == 19)
+      {
+        rounds[currentRound].round = '&clubs;';
+      }
+      console.log('init round: ' + rounds[currentRound].round);
       rounds[currentRound].players = [];
       for(var j=0; j < players.length; j++)
       {

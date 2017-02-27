@@ -3,36 +3,75 @@
   {
     width: 500px;
   }
+  .row{
+    padding: 0px;
+  }
+  .col{
+    padding: 0px;
+    text-align: center;
+  }
+  .row + .row
+  {
+    margin-top: 0px;
+  }
 </style>
 
 <div class="row">
-  <h3 class="col">
+  <h4 class="col">
     Current Round: {{newBolla.currentRound + 1}} -
     <span ng-if="newBolla.rounds[newBolla.currentRound].state == 0"> Calls </span>
     <span ng-if="newBolla.rounds[newBolla.currentRound].state == 1"> Play </span>
-  </h3>
+  </h4>
   <button class="button button-positive button-clear" ng-click="newBolla.newRound()"
           ng-if="newBolla.rounds[newBolla.currentRound].state == 2">New Round</button>
   <button class="button button-positive button-clear" ng-click="newBolla.playRound()"
           ng-if="newBolla.rounds[newBolla.currentRound].state == 0">Play Round</button>
   <button class="button button-assertive button-clear" ng-click="newBolla.resetRound()">Undo</button>
 </div>
+<!-- <table class="table">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th ng-click="newBolla.changeName($index)"
+        ng-repeat="player in newBolla.players">
+          {{player.name}}
+          <i class="ion-funnel" ng-if="player.isKooz"></i>
+          <i class="ion-ribbon-b" ng-if="player.isKing"></i>
+      </th>
+      <th>#</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="round in newBolla.rounds" class="table-row">
+      <td>{{round.round}}</td>
+      <td ng-repeat="player in round.players" ng-click="newBolla.playerClick($parent.$index,$index)">
+        <tr>
+          <td>
+            {{player.currentCall}} {{player.currentColor}} {{player.risk}}
+          </td>
+          <td>{{player.currentScore}}</td>
+        </tr>
+      </td>
+      <td>{{round.underOver}}</td>
+    </tr>
+  </tbody>
+</table> -->
 <div class="row">
   <div class="col col-10" style="border: 1px solid;"> # </div>
   <div class="col" style="border: 1px solid;"
         ng-click="newBolla.changeName($index)"
         ng-repeat="player in newBolla.players"> {{player.name}}
-        <i class="ion-funnel" ng-if="player.isKooz"></i>
-        <i class="ion-ribbon-b" ng-if="player.isKing"></i>
+        <i class="ion-funnel" ng-if="newBolla.rounds[newBolla.currentRound].players[$index].isKooz"></i>
+        <i class="ion-ribbon-b" ng-if="newBolla.rounds[newBolla.currentRound].players[$index].isKing"></i>
   </div>
   <div class="col col-10" style="border: 1px solid;"> </div>
 </div>
 <div>
   <div class="row" ng-repeat="round in newBolla.rounds">
-    <div class="col col-10" style="border: 1px solid;"> {{round.round}} </div>
+    <div class="col col-10" style="border: 1px solid;" ng-bind-html="round.round | html"></div>
     <div class="col" ng-repeat="player in round.players" ng-click="newBolla.playerClick($parent.$index,$index)">
       <div class="row">
-        <div class="col col-25" style="border: 1px solid;">{{player.currentCall}} {{player.currentColor}} {{player.risk}}</div>
+        <div class="col" style="border: 1px solid;">{{player.currentCall}} {{player.currentColor}} {{player.risk}}</div>
         <div class="col" style="border: 1px solid;">{{player.currentScore}}</div>
       </div>
     </div>
