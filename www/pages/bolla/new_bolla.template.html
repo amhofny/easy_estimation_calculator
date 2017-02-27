@@ -15,24 +15,29 @@
           ng-if="newBolla.rounds[newBolla.currentRound].state == 2">New Round</button>
   <button class="button button-positive button-clear" ng-click="newBolla.playRound()"
           ng-if="newBolla.rounds[newBolla.currentRound].state == 0">Play Round</button>
-  <button class="button button-assertive button-clear" ng-click="newBolla.resetRound()">Reset Round</button>
+  <button class="button button-assertive button-clear" ng-click="newBolla.resetRound()">Undo</button>
 </div>
 <div class="row">
   <div class="col col-10" style="border: 1px solid;"> # </div>
   <div class="col" style="border: 1px solid;"
         ng-click="newBolla.changeName($index)"
-        ng-repeat="player in newBolla.players"> {{player.name}} </div>
+        ng-repeat="player in newBolla.players"> {{player.name}}
+        <i class="ion-funnel" ng-if="player.isKooz"></i>
+        <i class="ion-ribbon-b" ng-if="player.isKing"></i>
+  </div>
   <div class="col col-10" style="border: 1px solid;"> </div>
 </div>
 <div>
   <div class="row" ng-repeat="round in newBolla.rounds">
     <div class="col col-10" style="border: 1px solid;"> {{round.round}} </div>
-    <div class="col" ng-repeat="player in round.players" ng-click="newBolla.playerCall($parent.$index,$index)">
+    <div class="col" ng-repeat="player in round.players" ng-click="newBolla.playerClick($parent.$index,$index)">
       <div class="row">
-        <div class="col col-25" style="border: 1px solid;">{{player.currentCall}} {{player.currentColor}}</div>
+        <div class="col col-25" style="border: 1px solid;">{{player.currentCall}} {{player.currentColor}} {{player.risk}}</div>
         <div class="col" style="border: 1px solid;">{{player.currentScore}}</div>
       </div>
     </div>
-    <div class="col col-10" style="border: 1px solid;"> -1 </div>
+    <div class="col col-10" style="border: 1px solid;">
+        {{round.underOver}}
+    </div>
   </div>
 </div>
