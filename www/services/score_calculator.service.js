@@ -101,7 +101,7 @@
       else if(player.currentCollected == player.currentCall)
         score = 10 + player.currentCollected;
       else
-        score = - 10 - Math.abs(player.currentCall - player.currentCollected);
+        score = - Math.abs(player.currentCall - player.currentCollected);
 
       //has call
       if(player.currentColor != '' && player.currentColor != undefined)

@@ -123,7 +123,7 @@
 
     function validateCollected(count)
     {
-      if(count == 13)
+      if(count != 13)
       {
         var alertPopup = $ionicPopup.alert({
            title: 'Collected = 13',

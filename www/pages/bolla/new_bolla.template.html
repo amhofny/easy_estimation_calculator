@@ -1,8 +1,4 @@
 <style>
-  .popup-container.active .popup
-  {
-    width: 500px;
-  }
   .row{
     padding: 0px;
   }
@@ -14,9 +10,13 @@
   {
     margin-top: 0px;
   }
+  h4
+  {
+    padding-top: 5px!important;
+  }
 </style>
 
-<div class="row">
+<div class="row" style="margin-top: 35px">
   <h4 class="col">
     Current Round: {{newBolla.currentRound + 1}} -
     <span ng-if="newBolla.rounds[newBolla.currentRound].state == 0"> Calls </span>
@@ -56,27 +56,28 @@
     </tr>
   </tbody>
 </table> -->
-<div class="row">
-  <div class="col col-10" style="border: 1px solid;"> # </div>
-  <div class="col" style="border: 1px solid;"
+<div class="row notebook-font">
+  <div class="col col-10 has-border"> # </div>
+  <div class="col has-border cut-names border-left"
         ng-click="newBolla.changeName($index)"
-        ng-repeat="player in newBolla.players"> {{player.name}}
+        ng-repeat="player in newBolla.players">
         <i class="ion-funnel" ng-if="newBolla.rounds[newBolla.currentRound].players[$index].isKooz"></i>
         <i class="ion-ribbon-b" ng-if="newBolla.rounds[newBolla.currentRound].players[$index].isKing"></i>
+        {{player.name}}
   </div>
-  <div class="col col-10" style="border: 1px solid;"> </div>
+  <div class="col col-10 has-border border-left"> </div>
 </div>
-<div>
+<ion-content class="has-header notebook-font" style="margin-top: 58px;">
   <div class="row" ng-repeat="round in newBolla.rounds" ng-style="{'background-color': (round.state==3)? 'red' : 'transparent'}">
-    <div class="col col-10" style="border: 1px solid;" ng-bind-html="round.round | html"></div>
-    <div class="col" ng-repeat="player in round.players" ng-click="newBolla.playerClick($parent.$index,$index)">
+    <div class="col col-10 has-border" ng-bind-html="round.round | html"></div>
+    <div class="col border-left" ng-repeat="player in round.players" ng-click="newBolla.playerClick($parent.$index,$index)">
       <div class="row">
-        <div class="col" style="border: 1px solid;">{{player.currentCall}} {{player.currentColor}} {{player.risk}}</div>
-        <div class="col" style="border: 1px solid;">{{player.currentScore}}</div>
+        <div class="col has-border">{{player.currentCall}} {{player.currentColor}} {{player.risk}}</div>
+        <div class="col has-border">{{player.currentScore}}</div>
       </div>
     </div>
-    <div class="col col-10" style="border: 1px solid;">
+    <div class="col col-10 has-border border-left">
         {{round.underOver}}
     </div>
   </div>
-</div>
+</ion-content>

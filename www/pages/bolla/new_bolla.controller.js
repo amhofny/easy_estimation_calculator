@@ -104,7 +104,7 @@
           flag = false;
         }
       }
-      if(flag == true && lamat != 13)
+      if(flag == true && lamat == 13)
       {
         vm.rounds[vm.currentRound].state = 2;
         //calculate sa3ayda
@@ -113,7 +113,7 @@
         scoreCalculator.endRoundCalculation(vm.rounds[vm.currentRound]);
         scoreCalculator.calculateKingKooz(vm.rounds[vm.currentRound].players);
       }
-      else if(lamat == 13)
+      else if(flag == true && lamat != 13)
       {
         roundService.validateCollected(lamat);
       }
