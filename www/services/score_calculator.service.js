@@ -66,7 +66,7 @@
       var prevScore = 0;
       var score = 0;
       if(currentRound > 0)
-        prevScore = rounds[currentRound-1].players[playerIndex].score;
+        prevScore = getPrevScore(rounds, currentRound, playerIndex);
       //check if he has call or not, check dash call, check dash, check normal call, check 8,9,10,11,12,13
       //change state to 2 if all players score entered
 
@@ -114,7 +114,7 @@
       //has risk
       if(player.risk != '')
       {
-        var multiplayer = parseInt(risk.replace('R', ''));
+        var multiplayer = parseInt(player.risk.replace('R', ''));
         if(score > 0)
           score += 10 * multiplayer;
         else
@@ -154,6 +154,34 @@
         round.underOver = count - 13;
 
       }
+    }
+    function getPrevScore(rounds, current, index)
+    {
+      var score = 0;
+      if(current = 0)
+        score = 0;
+      else
+      {
+        while(current > 0)
+        {
+          current -= 1;
+          var sa3aydah = 0;
+          for(var i=0 ;i < rounds[current].players.length; i++)
+          {
+            if(rounds[current].players[i].currentScore == 'x')
+              sa3aydah += 1;
+          }
+          if(sa3aydah == 4)
+          {
+            current -= 1;
+          }
+          else if(sa3aydah == 0)
+          {
+            score = rounds[current].players[index].currentScore;
+          }
+        }
+      }
+      return score;
     }
   }
 })();

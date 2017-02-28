@@ -95,13 +95,16 @@
     vm.checkRoundEnd = function()
     {
       var flag = true;
+      var lamat = 0;
       for(var i=0; i < vm.rounds[vm.currentRound].players.length; i++)
       {
-        if(vm.rounds[vm.currentRound].players[i].currentCollected == -1){
+        lamat += vm.rounds[vm.currentRound].players[i].currentCollected;
+        if(vm.rounds[vm.currentRound].players[i].currentCollected == -1)
+        {
           flag = false;
         }
       }
-      if(flag == true)
+      if(flag == true && lamat != 13)
       {
         vm.rounds[vm.currentRound].state = 2;
         //calculate sa3ayda
@@ -109,6 +112,10 @@
         //only looser
         scoreCalculator.endRoundCalculation(vm.rounds[vm.currentRound]);
         scoreCalculator.calculateKingKooz(vm.rounds[vm.currentRound].players);
+      }
+      else if(lamat == 13)
+      {
+        roundService.validateCollected(lamat);
       }
       vm.saveBolla();
     }

@@ -12,7 +12,8 @@
       resetRound: resetRound,
       playRound: playRound,
       newRound: newRound,
-      initRound: initRound
+      initRound: initRound,
+      validateCollected: validateCollected
     };
 
     function resetRound(rounds, currentRound)
@@ -44,7 +45,7 @@
         var alertPopup = $ionicPopup.alert({
          title: players[i].name + ' didn\'t call',
          template: 'Check all players calls'
-       });
+        });
 
       }
     }
@@ -117,6 +118,17 @@
         rounds[currentRound].players[j] = {name: players[j].name, currentCall: -1, risk: '',
                                     currentScore: 0, currentCollected: -1, currentColor: '',
                                     isKing: isKing, isKooz: isKooz, winLoose: -1};
+      }
+    }
+
+    function validateCollected(count)
+    {
+      if(count == 13)
+      {
+        var alertPopup = $ionicPopup.alert({
+           title: 'Collected = 13',
+           template: 'Every one is made!!!'
+         });
       }
     }
   }
