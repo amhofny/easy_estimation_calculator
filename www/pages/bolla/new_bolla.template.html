@@ -23,7 +23,7 @@
     <span ng-if="newBolla.rounds[newBolla.currentRound].state == 1"> Play </span>
   </h4>
   <button class="button button-positive button-clear" ng-click="newBolla.newRound()"
-          ng-if="newBolla.rounds[newBolla.currentRound].state == 2">New Round</button>
+          ng-if="newBolla.rounds[newBolla.currentRound].state == 2 || newBolla.rounds[newBolla.currentRound].state == 3">New Round</button>
   <button class="button button-positive button-clear" ng-click="newBolla.playRound()"
           ng-if="newBolla.rounds[newBolla.currentRound].state == 0">Play Round</button>
   <button class="button button-assertive button-clear" ng-click="newBolla.resetRound()">Undo</button>
@@ -67,7 +67,7 @@
   <div class="col col-10" style="border: 1px solid;"> </div>
 </div>
 <div>
-  <div class="row" ng-repeat="round in newBolla.rounds">
+  <div class="row" ng-repeat="round in newBolla.rounds" ng-style="{'background-color': (round.state==3)? 'red' : 'transparent'}">
     <div class="col col-10" style="border: 1px solid;" ng-bind-html="round.round | html"></div>
     <div class="col" ng-repeat="player in round.players" ng-click="newBolla.playerClick($parent.$index,$index)">
       <div class="row">

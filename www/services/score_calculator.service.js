@@ -11,9 +11,36 @@
     return {
       calculatePlayerScore: calculatePlayerScore,
       calculateKingKooz: calculateKingKooz,
-      calculateRoundCalls: calculateRoundCalls
+      calculateRoundCalls: calculateRoundCalls,
+      endRoundCalculation: endRoundCalculation
     };
 
+    function endRoundCalculation(round)
+    {
+      var winners = [];
+      var loosers = [];
+      for(var i=0; i < round.players.length; i++)
+      {
+        if(round.players[i].winLoose == 1)
+          winners[winners.length] = round.players[i];
+        else if(round.players[i].winLoose == 0)
+          loosers[loosers.length] = round.players[i];
+      }
+      //only winner
+      if(winners.length == 1)
+        winners[0].currentScore += 10;
+      //only looser
+      if(loosers.length == 1)
+        loosers[0].currentScore -= 10;
+      //sa3aydah
+      if(loosers.length == 4){
+        round.state = 3;
+        for(var i=0; i < round.players.length; i++)
+        {
+          round.players[i].currentScore = 'x';
+        }
+      }
+    }
     function calculateKingKooz(players)
     {
       var high, low;
@@ -44,12 +71,25 @@
       //change state to 2 if all players score entered
 
       var players = rounds[currentRound].players;
+
       if(player.currentCall == 'DC')
       {
         if(player.currentCollected == 0)
-          score = 20;//check over or under
+        {
+          if(rounds[currentRound].underOver > 0)
+          {
+            score = 20;
+          }
+          else
+            score = 30;
+        }
         else
-          score = -20;
+        {
+          if(rounds[currentRound].underOver > 0)
+            score = -20;//check over or under
+          else
+            score = -30;
+        }
       }
       else if(player.currentCall == 'D')
       {
@@ -58,14 +98,32 @@
         else
           score = -10;
       }
-      else if(player.currentColor != '' && player.currentColor != undefined)
-      {
-        score += 10;
-      }
       else if(player.currentCollected == player.currentCall)
-        score = 10;
+        score = 10 + player.currentCollected;
       else
-        score = - 10;
+        score = - 10 - Math.abs(player.currentCall - player.currentCollected);
+
+      //has call
+      if(player.currentColor != '' && player.currentColor != undefined)
+      {
+        if(score > 0)
+          score += 10;
+        else
+          score -= 10;
+      }
+      //has risk
+      if(player.risk != '')
+      {
+        var multiplayer = parseInt(risk.replace('R', ''));
+        if(score > 0)
+          score += 10 * multiplayer;
+        else
+          score -= 10 * multiplayer;
+      }
+      if(score > 0)
+        player.winLoose = 1;
+      else
+        player.winLoose = 0;
       return prevScore + score;
     }
 

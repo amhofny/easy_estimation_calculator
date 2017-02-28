@@ -32,7 +32,7 @@
 
     for(var i=0; i < 4; i++)
     {
-      vm.players[i] = {name: 'Player '+(i+1), score: 0, isKing: false, isKooz: false};
+      vm.players[i] = {name: 'Player '+(i+1), score: 0};
     }
 
     roundService.initRound(vm.rounds, vm.currentRound, vm.players);
@@ -104,6 +104,10 @@
       if(flag == true)
       {
         vm.rounds[vm.currentRound].state = 2;
+        //calculate sa3ayda
+        //only winner
+        //only looser
+        scoreCalculator.endRoundCalculation(vm.rounds[vm.currentRound]);
         scoreCalculator.calculateKingKooz(vm.rounds[vm.currentRound].players);
       }
       vm.saveBolla();

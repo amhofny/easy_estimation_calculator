@@ -107,8 +107,16 @@
       rounds[currentRound].players = [];
       for(var j=0; j < players.length; j++)
       {
+        var isKing = false;
+        var isKooz = false;
+        if(currentRound > 0)
+        {
+          isKing = rounds[currentRound-1].players[j].isKing;
+          isKooz = rounds[currentRound-1].players[j].isKooz;
+        }
         rounds[currentRound].players[j] = {name: players[j].name, currentCall: -1, risk: '',
-                                    currentScore: 0, currentCollected: -1, currentColor: ''};
+                                    currentScore: 0, currentCollected: -1, currentColor: '',
+                                    isKing: isKing, isKooz: isKooz, winLoose: -1};
       }
     }
   }
